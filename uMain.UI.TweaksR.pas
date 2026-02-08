@@ -3,7 +3,7 @@
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, Registry;
+  Winapi.Windows, Registry;
 
 function EnableAutoLoginR: Boolean;
 

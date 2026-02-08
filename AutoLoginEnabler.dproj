@@ -121,6 +121,8 @@
         <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
         <VerInfo_Keys>CompanyName=;FileDescription=Auto-login Enabler;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=;ProductName=Auto-login Enabler;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <Icon_MainIcon>AutoLoginEnabler_Icon.ico</Icon_MainIcon>
+        <DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+        <DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -137,6 +139,8 @@
         <DCCReference Include="uMain.UI.TweaksR.pas"/>
         <DCCReference Include="uMain.UI.TweaksW.pas"/>
         <DCCReference Include="uExt.pas"/>
+        <DCCReference Include="uMain.UI.Messages.pas"/>
+        <DCCReference Include="uMain.UI.Strings.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

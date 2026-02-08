@@ -6149,7 +6149,7 @@ object frmMain: TfrmMain
     TabOrder = 3
     TabStop = False
     OnClick = btnExitClick
-    SkinData.SkinSection = 'SPEEDBUTTON'
+    SkinData.SkinSection = 'TOOLBUTTON'
   end
   object btnAbout: TsBitBtn
     Left = 148
@@ -6164,7 +6164,7 @@ object frmMain: TfrmMain
     TabOrder = 2
     TabStop = False
     OnClick = btnAboutClick
-    SkinData.SkinSection = 'SPEEDBUTTON'
+    SkinData.SkinSection = 'TOOLBUTTON'
   end
   object pnlALE: TsPanel
     Left = 0
@@ -6208,7 +6208,7 @@ object frmMain: TfrmMain
     TabOrder = 1
     TabStop = False
     OnClick = btnOpenNetplwizClick
-    SkinData.SkinSection = 'SPEEDBUTTON'
+    SkinData.SkinSection = 'TOOLBUTTON'
   end
   object sAlphaHints: TsAlphaHints
     MaxWidth = 500

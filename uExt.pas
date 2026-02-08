@@ -5,20 +5,34 @@ interface
 uses
   Winapi.Windows, System.SysUtils;
 
-const
-  WIN10_20H2 = 19042;
+function RtlGetVersion(var RTL_OSVERSIONINFOEXW): LONG; stdcall; external 'ntdll.dll' Name 'RtlGetVersion';
 
 function Wow64DisableWow64FsRedirection(var OldValue: Pointer): BOOL; stdcall; external 'kernel32.dll';
 function Wow64RevertWow64FsRedirection(OldValue: Pointer): BOOL; stdcall; external 'kernel32.dll';
 
-function RtlGetVersion(var RTL_OSVERSIONINFOEXW): LONG; stdcall; external 'ntdll.dll' Name 'RtlGetVersion';
+procedure DisableWow64FsRedirection(const Proc: TProc);
 
-function IsWindowsVersionOrHigher(Major, Minor, Build: DWORD): Boolean;
-function IsWindows10_20H2_Or_Later: Boolean; inline;
+function IsWindowsVersionOrGreater(Major, Minor, Build: DWORD): Boolean;
 
 implementation
 
-function IsWindowsVersionOrHigher(Major, Minor, Build: DWORD): Boolean;
+procedure DisableWow64FsRedirection(const Proc: TProc);
+var
+  OldState: Pointer;
+  FsRedirDisabled: BOOL;
+begin
+  if not Assigned(Proc) then Exit;
+
+  FsRedirDisabled := Wow64DisableWow64FsRedirection(OldState);
+  try
+    Proc();
+  finally
+    if FsRedirDisabled then
+      Wow64RevertWow64FsRedirection(OldState);
+  end;
+end;
+
+function IsWindowsVersionOrGreater(Major, Minor, Build: DWORD): Boolean;
 var
   winver: RTL_OSVERSIONINFOEXW;
 begin
@@ -37,11 +51,6 @@ begin
         Exit(winver.dwBuildNumber >= Build);
     end;
   end;
-end;
-
-function IsWindows10_20H2_Or_Later: Boolean; inline;
-begin
-  Result := IsWindowsVersionOrHigher(10, 0, WIN10_20H2);
 end;
 
 end.

@@ -5,11 +5,11 @@ interface
 uses
   Winapi.Windows, System.SysUtils, Registry;
 
-function EnableAutoLoginW(wOption: string): Boolean;
+function EnableAutoLoginW(Enable: Boolean): Boolean;
 
 implementation
 
-function EnableAutoLoginW(wOption: string): Boolean;
+function EnableAutoLoginW(Enable: Boolean): Boolean;
 const
   ROOT1   = HKEY_LOCAL_MACHINE;
   PATH1   = 'Software\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device';
@@ -25,7 +25,7 @@ var
   xReg: TRegistry;
   Data: Cardinal;
 begin
-  Result := SameText(wOption, 'On');
+  Result := Enable;
 
   xReg := TRegistry.Create(KEY_ALL_ACCESS or KEY_WOW64_64KEY);
   try
@@ -33,7 +33,7 @@ begin
     if xReg.OpenKey(PATH1, True) then
     try
       try
-        if SameText(wOption, 'On') then
+        if Enable then
           Data := 0
         else
           Data := 2;
@@ -51,7 +51,7 @@ begin
     xReg.Free;
   end;
 
-  if SameText(wOption, 'Off') then
+  if not Enable then
   begin
     xReg := TRegistry.Create(KEY_ALL_ACCESS or KEY_WOW64_64KEY);
     try
