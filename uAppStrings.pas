@@ -1,4 +1,4 @@
-﻿unit uMain.UI.Strings;
+﻿unit uAppStrings;
 
 interface
 

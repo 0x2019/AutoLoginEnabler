@@ -1,17 +1,16 @@
-﻿unit uExt;
+﻿unit uOSUtils;
 
 interface
 
 uses
   Winapi.Windows, System.SysUtils;
 
-function RtlGetVersion(var RTL_OSVERSIONINFOEXW): LONG; stdcall; external 'ntdll.dll' Name 'RtlGetVersion';
+procedure DisableWow64FsRedirection(const Proc: TProc);
 
 function Wow64DisableWow64FsRedirection(var OldValue: Pointer): BOOL; stdcall; external 'kernel32.dll';
 function Wow64RevertWow64FsRedirection(OldValue: Pointer): BOOL; stdcall; external 'kernel32.dll';
 
-procedure DisableWow64FsRedirection(const Proc: TProc);
-
+function RtlGetVersion(var RTL_OSVERSIONINFOEXW): LONG; stdcall; external 'ntdll.dll' Name 'RtlGetVersion';
 function IsWindowsVersionOrGreater(Major, Minor, Build: DWORD): Boolean;
 
 implementation

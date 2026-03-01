@@ -1,20 +1,20 @@
-﻿program AutoLoginEnabler;
+program AutoLoginEnabler;
 
 uses
   Winapi.Windows,
   Vcl.Forms,
   uMain in 'uMain.pas' {frmMain},
-  uMain.UI in 'uMain.UI.pas',
-  uMain.UI.TweaksR in 'uMain.UI.TweaksR.pas',
-  uMain.UI.TweaksW in 'uMain.UI.TweaksW.pas',
-  uExt in 'uExt.pas',
-  uMain.UI.Messages in 'uMain.UI.Messages.pas',
-  uMain.UI.Strings in 'uMain.UI.Strings.pas';
+  uAppController in 'uAppController.pas',
+  uTweaksR in 'uTweaksR.pas',
+  uTweaksW in 'uTweaksW.pas',
+  uAppStrings in 'uAppStrings.pas',
+  uForms in 'Common\uForms.pas',
+  uMessageBox in 'Common\uMessageBox.pas',
+  uOSUtils in 'Common\uOSUtils.pas';
 
 var
   uMutex: THandle;
 
-{$O+} {$SetPEFlags IMAGE_FILE_RELOCS_STRIPPED}
 {$R *.res}
 
 begin
@@ -25,14 +25,14 @@ begin
   end;
 
   uMutex := CreateMutex(nil, True, 'ALE!');
-  if (uMutex <> 0 ) and (GetLastError = 0) then begin
-
+  if (uMutex <> 0) and (GetLastError = 0) then
+  begin
     Application.Initialize;
     Application.MainFormOnTaskbar := True;
     Application.CreateForm(TfrmMain, frmMain);
     Application.Run;
 
-  if uMutex <> 0 then
-    CloseHandle(uMutex);
+    if uMutex <> 0 then
+      CloseHandle(uMutex);
   end;
 end.
