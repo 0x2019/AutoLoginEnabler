@@ -5,12 +5,12 @@ uses
   Vcl.Forms,
   uMain in 'uMain.pas' {frmMain},
   uAppController in 'uAppController.pas',
+  uAppStrings in 'uAppStrings.pas',
   uTweaksR in 'uTweaksR.pas',
   uTweaksW in 'uTweaksW.pas',
-  uAppStrings in 'uAppStrings.pas',
-  uForms in 'Common\uForms.pas',
-  uMessageBox in 'Common\uMessageBox.pas',
-  uOSUtils in 'Common\uOSUtils.pas';
+  uForms in '..\Common\uForms.pas',
+  uMessageBox in '..\Common\uMessageBox.pas',
+  uOSUtils in '..\Common\uOSUtils.pas';
 
 var
   uMutex: THandle;

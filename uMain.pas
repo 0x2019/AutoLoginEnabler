@@ -43,16 +43,16 @@ implementation
 {$R *.dfm}
 
 uses
-  uAppController, uAppStrings, uTweaksW;
+  uAppController, uAppStrings;
 
 procedure TfrmMain.btnAboutClick(Sender: TObject);
 begin
-  UI_MessageBox(Self, Format(SAboutMsg, [APP_NAME, APP_VERSION, APP_RELEASE, APP_URL]), MB_ICONQUESTION or MB_OK);
+  AppController_About(Self);
 end;
 
 procedure TfrmMain.btnExitClick(Sender: TObject);
 begin
-  Close;
+  AppController_Exit(Self);
 end;
 
 procedure TfrmMain.ChangeMessageBoxPosition(var Msg: TMessage);
@@ -62,7 +62,7 @@ end;
 
 procedure TfrmMain.chkEALClick(Sender: TObject);
 begin
-  EnableAutoLoginW(chkEAL.Checked);
+  AppController_ToggleAutoLogin(Self);
 end;
 
 procedure TfrmMain.DragForm(Sender: TObject; Button: TMouseButton;
@@ -78,19 +78,19 @@ begin
 
   pnlALE.OnMouseDown := DragForm;
 
-  App_LoadTweaks(Self);
+  AppController_LoadTweaks(Self);
 end;
 
 procedure TfrmMain.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_ESCAPE then
-    Close;
+    AppController_Exit(Self);
 end;
 
 procedure TfrmMain.btnOpenNetplwizClick(Sender: TObject);
 begin
-  App_OpenNetplwiz(Self);
+  AppController_OpenNetplwiz(Self);
 end;
 
 end.

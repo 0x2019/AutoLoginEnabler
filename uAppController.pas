@@ -3,45 +3,60 @@
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, ShellAPI;
+  Winapi.Windows, System.SysUtils, ShellAPI, uMain;
 
-procedure App_LoadTweaks(AForm: TObject);
-procedure App_OpenNetplwiz(AForm: TObject);
+procedure AppController_LoadTweaks(AForm: TfrmMain);
+procedure AppController_OpenNetplwiz(AForm: TfrmMain);
+
+procedure AppController_About(AForm: TfrmMain);
+procedure AppController_Exit(AForm: TfrmMain);
+procedure AppController_ToggleAutoLogin(AForm: TfrmMain);
 
 implementation
 
 uses
-  uAppStrings, uMain, uTweaksR,
-  uMessageBox, uOSUtils;
+  uMessageBox, uOSUtils,
+  uAppStrings, uTweaksR, uTweaksW;
 
-procedure App_LoadTweaks(AForm: TObject);
-var
-  F: TfrmMain;
+procedure AppController_LoadTweaks(AForm: TfrmMain);
 begin
-  if not (AForm is TfrmMain) then Exit;
-  F := TfrmMain(AForm);
-
-  F.chkEAL.Checked := EnableAutoLoginR;
+  if AForm = nil then Exit;
+  AForm.chkEAL.Checked := EnableAutoLoginR;
 end;
 
-procedure App_OpenNetplwiz(AForm: TObject);
-var
-  F: TfrmMain;
+procedure AppController_OpenNetplwiz(AForm: TfrmMain);
 begin
-  if not (AForm is TfrmMain) then Exit;
-  F := TfrmMain(AForm);
+  if AForm = nil then Exit;
 
   DisableWow64FsRedirection(
     procedure
     var
-      R: HINST;
+      R: NativeInt;
     begin
-      R := ShellExecute(F.Handle, 'open', 'Netplwiz.exe', nil, nil, SW_SHOWNORMAL);
+      R := NativeInt(ShellExecute(AForm.Handle, 'open', 'Netplwiz.exe', nil, nil, SW_SHOWNORMAL));
 
-      if NativeInt(R) <= 32 then
-        UI_MessageBox(F, Format(SOpenNetplwizFailMsg, [NativeInt(R)]), MB_ICONWARNING or MB_OK);
+      if R <= 32 then
+        UI_MessageBox(AForm, Format(SOpenNetplwizFailMsg, [R]), MB_ICONWARNING or MB_OK);
     end
   );
+end;
+
+procedure AppController_About(AForm: TfrmMain);
+begin
+  if AForm = nil then Exit;
+  UI_MessageBox(AForm, Format(SAboutMsg, [APP_NAME, APP_VERSION, APP_RELEASE, APP_URL]), MB_ICONQUESTION or MB_OK);
+end;
+
+procedure AppController_Exit(AForm: TfrmMain);
+begin
+  if AForm = nil then Exit;
+  AForm.Close;
+end;
+
+procedure AppController_ToggleAutoLogin(AForm: TfrmMain);
+begin
+  if AForm = nil then Exit;
+  EnableAutoLoginW(AForm.chkEAL.Checked);
 end;
 
 end.
